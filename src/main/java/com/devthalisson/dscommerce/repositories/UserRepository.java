@@ -7,11 +7,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-
-    User findByEmail(String email);
 
     @Query(nativeQuery = true, value = """
 			SELECT tb_user.email AS username, tb_user.password, tb_role.id AS roleId, tb_role.authority
@@ -22,4 +21,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
 		""")
     List<UserDetailsProjection> searchUserAndRolesByEmail(String email);
 
+	Optional<User> findByEmail(String email);
 }
